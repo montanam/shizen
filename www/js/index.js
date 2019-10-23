@@ -2382,7 +2382,7 @@ app.controller("JvfController", function($scope, $route, $rootScope, $http, $coo
   ctl.pushNotification = function(){
     var push = PushNotification.init({
       android: {
-        "senderID": "000000000"
+        "senderID": "38165338885"
       },
       ios: {
         alert: "true",
