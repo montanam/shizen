@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no" />
 
     <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="DDcOq2Yq+OhXcOAP1yoFi6ppQ6MuN8rva0iVTmJXihwqb9iK5X3UpGzRRZxUEQQJ6AgWO3MXqD4ImwP7eQz9wA==" />
+<meta name="csrf-token" content="DjVv6cOVFjs9T8RLqvNzC257SV6S1ziLbPJvxBcL0FZZurrPFnWgrcG/6cV/hAf9aDqgIWe8QIBDy6JCQ1MXoA==" />
     
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type="text/javascript" src="cordova.js"></script>
@@ -56,7 +56,7 @@
       <button id="close" type="button" class="close detail-header-button" ng-click="ctl.closeProduct()" aria-label="Close">
         <span aria-hidden="true"><i class="material-icons">arrow_back_ios</i></span>
       </button>
-      <span id="nav-title" class="detail-header-title">{{ctl.product_detail.nome_prodotto}}</span>
+      <span id="nav-title" class="detail-header-title" style="overflow-y: auto;max-height: 78px;">{{ctl.product_detail.nome_prodotto}}</span>
       <a class="detail-header-icon" id="signed" ng-click="ctl.share_product(ctl.product_detail)">
         <i class="material-icons">share</i>
       </a>

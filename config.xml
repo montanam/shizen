@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="net.serendpt.shizen" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" 
+<widget id="net.serendpt.shizen" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" 
       xmlns:gap="http://phonegap.com/ns/1.0"
       xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>Shizen-joias</name>
+    <name>Shizen Joias</name>
     <description>Shizen Joias by JVF</description>
     <author email='fabio@serendpt.net' href='http://serendpt.net/it'>SerenDPT</author>
     <content src="index.html" />
