@@ -3,7 +3,7 @@
       xmlns:gap="http://phonegap.com/ns/1.0"
       xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Shizen-joias</name>
-    <description>Shizen joias by JVF</description>
+    <description>Shizen Joias by JVF</description>
     <author email='fabio@serendpt.net' href='http://serendpt.net/it'>SerenDPT</author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />

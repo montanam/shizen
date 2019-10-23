@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "38165338885",
+    "firebase_url": "https://jvf-shizen.firebaseio.com",
+    "project_id": "jvf-shizen",
+    "storage_bucket": "jvf-shizen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38165338885:android:4979b18adb6830bb42b56c",
+        "android_client_info": {
+          "package_name": "net.serendpt.shizen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38165338885-jfu3uqjns33hmvbo7223qg4qcsm98e3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5_fbruYK4imXhPG32DRcXX8K57tyOfkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38165338885-jfu3uqjns33hmvbo7223qg4qcsm98e3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
