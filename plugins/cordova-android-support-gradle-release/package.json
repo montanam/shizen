@@ -1,0 +1,37 @@
+{
+  "_from": "git+https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+  "_id": "cordova-android-support-gradle-release@3.0.1",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-android-support-gradle-release",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+    "rawSpec": "https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+    "saveSpec": "git+https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+    "fetchSpec": "https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/dpa99c/cordova-android-support-gradle-release.git#ee9f5d4691f5f8d9d13701913fa72099bba38463",
+  "_spec": "https://github.com/dpa99c/cordova-android-support-gradle-release.git",
+  "_where": "/Users/michele/Desktop/Github/app-jvf/shizen-joias",
+  "author": {
+    "name": "Dave Alden"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "q": "^1.4.1",
+    "semver": "5.6.0"
+  },
+  "deprecated": false,
+  "description": "Cordova/Phonegap plugin to align various versions of the Android Support libraries specified by other plugins to a specific version",
+  "devDependencies": {},
+  "license": "MIT",
+  "name": "cordova-android-support-gradle-release",
+  "version": "3.0.1"
+}

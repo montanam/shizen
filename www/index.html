@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app" ng-cloak ng-strict>
+  <head>
+    
+
+    <title>Jvf</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no" />
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="3T0iIzHpK2dGwYnzTAH088sobSu8B1BUw1BPnY07MrRkIC8JuTVcMnt/jtXD2ArJIYt5DeJ7yn6ODnBvICdznA==" />
+    
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+
+
+    <style type="text/css">
+      #app_spinner {
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        background: white;
+        z-index: 1000000;
+      }
+      #app_spinner div {
+        height: 40px;
+        width: 20em;
+        position: absolute;
+        top: calc(50vh - 20px);
+        left: calc(50vw - 10em);
+        text-align: center;
+        font-size: 1.8em;
+        font-weight: bold;
+        color: white;
+        background: #aa165f;
+      }
+      #app_spinner div.reload {
+        height: 100px;
+        top: calc(50vh - 50px);
+        padding-top: 12px;
+        cursor: pointer;
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+
+  <body ng-controller="JvfController as ctl" data-space_id="shizen-joias">
+    <!-- NAVBAR PER DETTAGLI PRODOTTO -->
+    <div id="nav-header" class="detail-header" ng-if="ctl.currTemplate == 'partials/product_detail.html'">
+      <button id="close" type="button" class="close detail-header-button" ng-click="ctl.closeProduct()" aria-label="Close">
+        <span aria-hidden="true"><i class="material-icons">arrow_back_ios</i></span>
+      </button>
+      <span id="nav-title" class="detail-header-title">{{ctl.product_detail.nome_prodotto}}</span>
+      <a class="detail-header-icon" id="signed" ng-click="ctl.share_product(ctl.product_detail)">
+        <i class="material-icons">share</i>
+      </a>
+    </div>
+    <!-- NAVBAR PER DETTAGLI POST -->
+    <div id="nav-header" class="post-header" ng-if="ctl.currTemplate == 'partials/post_detail.html'">
+      <button id="close" type="button" class="close post-header-button" ng-click="ctl.closePost()" aria-label="Close">
+        <span aria-hidden="true"><i class="material-icons">arrow_back_ios</i></span>
+      </button>
+      <span id="nav-title" class="post-header-title">
+        Post del {{ctl.post_detail.data_ora | date: 'd/M/yyyy' }}
+        Ore {{ctl.post_detail.data_ora | date: 'HH:mm' }}
+      </span>
+      <a class="post-header-icon" id="signed" ng-click="ctl.share_post(ctl.post_detail)">
+        <i class="material-icons">share</i>
+      </a>
+    </div>
+    <!-- NAVBAR -->
+    <div id="nav-header" class="header" ng-if="ctl.currTemplate != 'partials/product_detail.html' && ctl.currTemplate != 'partials/post_detail.html' ">
+      <span id="nav-title" class="header-title">{{ctl.space.title}}</span>
+      <a class="header-sign" id="sign-in" ng-if="!ctl.logged" ng-click="ctl.openLog()">Sign In</a>
+      <a class="header-icon" id="signed" ng-if="ctl.logged" ng-click="ctl.logOut()"><img src="img/profile.png""></a>
+    </div>
+
+    <div class="spinner" id="app_spinner">
+      <div class="loading">Loading...</div>
+      <div class="reload" ng-click="ctl.reload()" style="display: none;">
+        Network error.<br />
+        Click here to retry
+      </div>
+    </div>
+    <div class="container {{ctl.no_scroll}}" style="min-height: 100vh; padding-bottom: 80px;">
+      <ng-view></ng-view>
+
+<script type="text/ng-template" id="partials/posts.html">
+  <div id="posts" class="page_80">
+  <div class="content_post with-share-button" ng-repeat="p in ctl.space.posts">
+    <b>{{p.languages[0].des_annuncio}}</b>
+    <img ng-click="ctl.showPost(p)" src="https://www.jewelryvirtualfair.com/public/post-image/{{p.immagine_1}}" class="img-responsive mt-3" alt="JVF">
+    
+    <!--div class="content_action_post">
+        <div class="action_post_icon no_cp"><i class="fa fa-heart-o"></i> 10&nbsp;Mi piace</div>
+    </div-->
+  </div>
+
+</div>
+</script>
+<script type="text/ng-template" id="partials/showroom.html">
+  <div id="showroom" class="page_80">
+  <div class="row">
+    <div class="col-md-4 col-6 with-share-button" ng-repeat="p in ctl.space.products">
+      <div class="href_art">
+        <img ng-click='ctl.showProduct(p)' src="https://www.jewelryvirtualfair.com/public/prod-page/{{p.photo_galleries[0].nome_foto}}"
+        class="img-responsive bordered_f0 " alt="JVF" />
+        <h3 style="text-align: center;">{{p.nome_prodotto}}</h3>
+        <!-- div class="prezzo_scat">€ 12,00</div -->
+      </div>
+    </div>
+  </div>    
+</div>
+</script>
+<script type="text/ng-template" id="partials/gallery.html">
+  <div id="gallery" class="page_80">
+  <div class="owl-item cloned">
+    <div class="item" ng-repeat="g in ctl.space.gallery">
+      <img src="https://www.jewelryvirtualfair.com/public/gallery-page/{{g.nome_foto}}"
+        class="img-responsive" alt="{{ctl.space.title}}" />
+      <br />
+    </div>
+  </div>
+
+</div>
+</script>
+<script type="text/ng-template" id="partials/video.html">
+  <div id="video" class="page_80">
+  <br />
+  <h1 class="h1_scheda">Video Aziendale</h1>
+  <br />
+  
+  <iframe ng-if="ctl.space.info.video_aziendale" width="100%" height="350px" src="{{ctl.space.info.video_aziendale | to_trusted_url}}" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</script>
+<script type="text/ng-template" id="partials/profile.html">
+  <div id="profile" class="page_80">
+  <div class="row">
+    <div class="col-sm-3 hide_sm">
+      <div class="content_img_scheda ">
+      </div>
+    </div>
+    <div id="banner" style="padding-top:0!important;">
+      <img style="max-width: 100%; margin-bottom: 10px;" src="https://www.jewelryvirtualfair.com/public/banner-page/{{ctl.space.info.banner_page}}">
+    </div>
+    <div class="col-sm-9">
+      <h2 class="h2_scheda">{{ctl.space.info.claim_page}}</h2>
+      <br />
+    </div>
+  </div>
+  <h5 class="h5_scheda j_height_des" ng-bind-html="ctl.space.info.des_page | to_trusted"></h5>
+  <br /><br />
+  <div class="content_fixed_right_scheda" style="position: static; top: unset; width: unset;">
+    <div class="content_dati_scheda">
+        <strong>Nazione:</strong>
+          {{ctl.space.info.nazione || 'Italia'}}<br />
+        <strong>Città:</strong>
+          {{ctl.space.info.citta}} - 
+          {{ctl.space.info.cap}}<br />
+        <strong>Indirizzo:</strong>
+          <a href="" ng-click="ctl.loadMap()">
+            {{ctl.space.info.indirizzo}}
+          </a><br />
+          <br />
+        <strong>Tel.</strong>
+          <a href="tel:{{ctl.space.info.nr_telefono}}">{{ctl.space.info.nr_telefono}}</a>
+          <br />
+        
+        <a href="http://{{ctl.space.info.sito_internet}}" target="_blank">
+          https://{{ctl.space.info.sito_internet}}
+        </a>
+    </div>
+    <!-- div class="content_mappa_scheda">
+        MAPPA
+      <script type="text/javascript">
+          var $googlemap_latitude = 43.4545,
+              $googlemap_longitude = 11.882226,
+          $googlemap_zoom = 7; //non modificare +
+      </script>
+    </div -->
+  </div>
+</div>
+</script>
+<script type="text/ng-template" id="partials/chat.html">
+  <div id="chat" class="page_80" style="overflow-y: none;">
+  <div id="chat-box" class="chat-box" style="overflow-y: auto;">
+    <div ng-repeat="elem in ctl.space.chats">
+      <div class="bubble-q" ng-bind-html="elem.question | newlines | to_trusted "></div>
+      <div ng-if="elem.answer" class="bubble-a" ng-bind-html="elem.answer  | newlines | to_trusted"></div>
+    </div>
+  </div> 
+  <div class="input-container">
+    <textarea id="msg-input" type="text" name="message" style="grid-area: text;"></textarea>
+    <button ng-click="ctl.send()" class="send-btn" style="grid-area: send;">Send</button>
+  </div>
+</div>
+</script>
+<script type="text/ng-template" id="partials/product_detail.html">
+  <div id="imgpop" class="page_100">
+  <div>
+    <!-- SOLO UNA FOTO -->
+    <div class="popcont img-size" ng-if="ctl.product_detail.photo_galleries.length == 1">
+      <img class="img-size popcont" src="https://www.jewelryvirtualfair.com/public/prod-page/{{ctl.product_detail.photo_galleries[0].nome_foto}}" clrass="d-block w-100" alt="JVF">
+    </div>
+    <!-- PIU DI UNA FOTO -->
+    <div ng-if="ctl.product_detail.photo_galleries.length > 1">
+      <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselIndicators" class="{{($index == 0) ? 'active' : '' }}" data-slide-to="{{$index}}" 
+              ng-repeat="foto in ctl.product_detail.photo_galleries track by $index"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item {{($index == 0) ? 'active' : '' }}" ng-repeat="foto in ctl.product_detail.photo_galleries track by $index">
+            <img id="carousel-img" class="img-size popcont" ng-if="ctl.current_view == 'product_detail'" src="https://www.jewelryvirtualfair.com/public/prod-page/{{foto.nome_foto}}" clrass="d-block w-100" alt="JVF">
+          </div>
+        </div>
+        <button class="carousel-control-prev" style="border:none!important; background-color: transparent!important;" onclick="$('#carouselIndicators').carousel('prev')">
+          <i class="material-icons" style="color:#aa165f;font-size: 45px;">keyboard_arrow_left</i>
+          <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" style="border:none!important; background-color: transparent!important;" onclick="$('#carouselIndicators').carousel('next')">
+          <i class="material-icons" style="color:#aa165f;font-size: 45px;">keyboard_arrow_right</i>
+          <span class="sr-only">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="margin: 0 auto; max-width: 80%;">
+      <div style="margin:10px;">
+        <div ng-if="ctl.product_detail.des_estesa != '' && ctl.product_detail.des_estesa != null">
+          <p class="pop-title-desc"><b>Descrizione prodotto</b></p>
+          <p id="desc-content" class="pop-text-content">{{ctl.product_detail.des_estesa}}</p>
+        </div>
+        <div ng-if="ctl.product_detail.specifiche_text != '' && ctl.product_detail.specifiche_text != null">
+          <p class="pop-title-desc"><b>Specifiche prodotto</b></p>
+          <p id="desc-content" class="pop-text-content">{{ctl.product_detail.specifiche_text}}</p>
+        </div>
+        <div id="chat-box-container">
+          <p class="pop-title-content" style="color:black;">Hai dubbi su questo prodotto o vuoi acquistarlo? Scrivici!</p>
+          <div class="input-container-detail">
+            <textarea id="msg-input" type="text" name="message" style="grid-area: text;"></textarea>
+            <button ng-click="ctl.send()" class="send-btn" style="grid-area: send;">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="message-sent">
+    <h3><b>Messaggio inviato!</b></h3>
+    <p>Il messaggio è stato inviato, gli operatori di {{ctl.nome_agency}} ti risponderanno al più presto!</p>
+  </div>
+</div>
+</script>
+<script type="text/ng-template" id="partials/post_detail.html">
+  <div id="postpop" class="page_100">
+  <div>
+    <!-- SOLO UNA FOTO -->
+    <div class="popcont img-size" ng-if="ctl.post_pics.length == 1">
+      <img class="img-size popcont d-block w-100" src="https://www.jewelryvirtualfair.com/public/post-image/{{ctl.post_pics[0]}}" alt="JVF">
+    </div>
+    <!-- PIU DI UNA FOTO -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" ng-if="ctl.post_pics.length > 1">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" class="{{($index == 0) ? 'active' : '' }}" data-slide-to="{{$index}}" 
+              ng-repeat="foto in ctl.post_pics track by $index"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item {{($index == 0) ? 'active' : '' }}" ng-repeat="foto in ctl.post_pics track by $index">
+          <img class="img-size popcont" src="https://www.jewelryvirtualfair.com/public/post-image/{{foto}}" clrass="d-block w-100" alt="JVF">
+        </div>
+      </div>
+      <button class="carousel-control-prev" style="border:none!important; background-color: transparent!important;" onclick="$('#carouselExampleIndicators').carousel('prev')">
+          <i class="material-icons" style="color:#aa165f;font-size: 45px;">keyboard_arrow_left</i>
+          <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" style="border:none!important; background-color: transparent!important;" onclick="$('#carouselExampleIndicators').carousel('next')">
+          <i class="material-icons" style="color:#aa165f;font-size: 45px;">keyboard_arrow_right</i>
+          <span class="sr-only">Next</span>
+        </button>
+    </div>
+
+    <div style="margin: 0 auto; max-width: 80%;">
+      <div style="margin:10px;">
+        <div ng-if="ctl.post_detail.languages[0].des_annuncio != '' && ctl.post_detail.languages[0].des_annuncio != null">
+          <p id="desc-content" class="pop-text-content">{{ctl.post_detail.languages[0].des_annuncio}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</script>
+    </div>
+
+    <div id="log-pop">
+      <div class="div-close"><a ng-click="ctl.closeLog()" style="margin-right: 3px;">X</a></div>
+      <div class="log-cont">
+        <label style="font-size:20px; font-weight: bold;">Log in to get exclusive features!</label>
+        <label>Email</label>
+        <input type="email" name="email" id="email">
+        <label>Password</label>
+        <input type="password" name="password" id="pwd">
+      </div>
+      <div class="log-btn">
+        <button class="btn-margin" ng-click="ctl.logIn()">Log In</button>
+        <button class="btn-margin" ng-click="ctl.register()">Register</button>
+      </div>
+    </div>
+
+    <nav class="fixed-bottom jvf-menu">
+      <ul>
+        <li class="menu-posts"   ><a href="#!/posts"    ng-class="ctl.current_view == 'posts'    ? 'active' : ''" id="tar_post">Post</a></li>
+        <li class="menu-showroom"><a href="#!/showroom" ng-class="ctl.current_view == 'showroom' ? 'active' : ''" id="tar_products">Show<br />Room</a></li>
+        <li class="menu-gallery" ><a href="#!/gallery"  ng-class="ctl.current_view == 'gallery'  ? 'active' : ''" id="tar_gallery">Galleria</a></li>
+        <li class="menu-video"   ><a href="#!/video"    ng-class="ctl.current_view == 'video'    ? 'active' : ''" id="tar_video">Video</a></li>
+        <li class="menu-profile" ><a href="#!/profile"  ng-class="ctl.current_view == 'profile'  ? 'active' : ''" id="tar_profile">Profilo</a></li>
+        <li class="menu-chat"    ><a href="#!/chat"     ng-class="ctl.current_view == 'chat'     ? 'active' : ''" id="tar_chat">Chat</a></li>
+      </ul>
+    </nav>
+  </body>
+</html>
