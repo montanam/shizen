@@ -11,7 +11,7 @@
     <meta name="format-detection" content="telephone=no" />
 
     <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="DjVv6cOVFjs9T8RLqvNzC257SV6S1ziLbPJvxBcL0FZZurrPFnWgrcG/6cV/hAf9aDqgIWe8QIBDy6JCQ1MXoA==" />
+<meta name="csrf-token" content="2yOcM8bGmieFQzvWnxdXqtNFH4cTLZcrAxoOSWfG1wHBinNI5Prb99NoLEm5A8IMNQm+VlideCTASsXDAwSS+w==" />
     
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <script type="text/javascript" src="cordova.js"></script>
@@ -67,8 +67,8 @@
         <span aria-hidden="true"><i class="material-icons">arrow_back_ios</i></span>
       </button>
       <span id="nav-title" class="post-header-title">
-        Post del {{ctl.post_detail.data_ora | date: 'd/M/yyyy' }}
-        Ore {{ctl.post_detail.data_ora | date: 'HH:mm' }}
+        {{ 'posted' | translate }} {{ctl.post_detail.data_ora | date: 'd/M/yyyy' }}
+        {{ 'at' | translate }} {{ctl.post_detail.data_ora | date: 'HH:mm' }}
       </span>
       <a class="post-header-icon" id="signed" ng-click="ctl.share_post(ctl.post_detail)">
         <i class="material-icons">share</i>
@@ -82,10 +82,10 @@
     </div>
 
     <div class="spinner" id="app_spinner">
-      <div class="loading">Loading...</div>
+      <div class="loading">{{ 'loading' | translate }}</div>
       <div class="reload" ng-click="ctl.reload()" style="display: none;">
-        Network error.<br />
-        Click here to retry
+        {{ 'network_err' | translate }}<br />
+        {{ 'click_retry' | translate }}
       </div>
     </div>
     <div class="container {{ctl.no_scroll}}" style="min-height: 100vh; padding-bottom: 80px;">
@@ -158,17 +158,17 @@
   <br /><br />
   <div class="content_fixed_right_scheda" style="position: static; top: unset; width: unset;">
     <div class="content_dati_scheda">
-        <strong>Nazione:</strong>
+        <strong>{{ 'nation' | translate }}:</strong>
           {{ctl.space.info.nazione || 'Italia'}}<br />
-        <strong>Città:</strong>
+        <strong>{{ 'city' | translate }}:</strong>
           {{ctl.space.info.citta}} - 
           {{ctl.space.info.cap}}<br />
-        <strong>Indirizzo:</strong>
+        <strong>{{ 'address' | translate }}:</strong>
           <a href="" ng-click="ctl.loadMap()">
             {{ctl.space.info.indirizzo}}
           </a><br />
           <br />
-        <strong>Tel.</strong>
+        <strong>{{ 'phone' | translate }}.</strong>
           <a href="tel:{{ctl.space.info.nr_telefono}}">{{ctl.space.info.nr_telefono}}</a>
           <br />
         
@@ -234,18 +234,18 @@
     <div style="margin: 0 auto; max-width: 80%;">
       <div style="margin:10px;">
         <div ng-if="ctl.product_detail.des_estesa != '' && ctl.product_detail.des_estesa != null">
-          <p class="pop-title-desc"><b>Descrizione prodotto</b></p>
+          <p class="pop-title-desc"><b>{{ 'product_des' | translate }}</b></p>
           <p id="desc-content" class="pop-text-content">{{ctl.product_detail.des_estesa}}</p>
         </div>
         <div ng-if="ctl.product_detail.specifiche_text != '' && ctl.product_detail.specifiche_text != null">
-          <p class="pop-title-desc"><b>Specifiche prodotto</b></p>
+          <p class="pop-title-desc"><b>{{ 'product_spc' | translate }}</b></p>
           <p id="desc-content" class="pop-text-content">{{ctl.product_detail.specifiche_text}}</p>
         </div>
         <div id="chat-box-container">
-          <p class="pop-title-content" style="color:black;">Hai dubbi su questo prodotto o vuoi acquistarlo? Scrivici!</p>
+          <p class="pop-title-content" style="color:black;">{{ 'doubt' | translate }}</p>
           <div class="input-container-detail">
             <textarea id="msg-input" type="text" name="message" style="grid-area: text;"></textarea>
-            <button ng-click="ctl.send()" class="send-btn" style="grid-area: send;">Send</button>
+            <button ng-click="ctl.send()" class="send-btn" style="grid-area: send;">{{'send' | translate}}</button>
           </div>
         </div>
       </div>
@@ -253,8 +253,8 @@
   </div>
 
   <div id="message-sent">
-    <h3><b>Messaggio inviato!</b></h3>
-    <p>Il messaggio è stato inviato, gli operatori di {{ctl.nome_agency}} ti risponderanno al più presto!</p>
+    <h3><b>{{ 'message_sent' | translate }}</b></h3>
+    <p>{{ 'f_msg_sent' | translate }}</p>
   </div>
 </div>
 </script>
@@ -301,7 +301,7 @@
     <div id="log-pop">
       <div class="div-close"><a ng-click="ctl.closeLog()" style="margin-right: 3px;">X</a></div>
       <div class="log-cont">
-        <label style="font-size:20px; font-weight: bold;">Log in to get exclusive features!</label>
+        <label style="font-size:20px; font-weight: bold;">{{ 'login_msg' | translate }}</label>
         <label>Email</label>
         <input type="email" name="email" id="email">
         <label>Password</label>
@@ -309,18 +309,42 @@
       </div>
       <div class="log-btn">
         <button class="btn-margin" ng-click="ctl.logIn()">Log In</button>
-        <button class="btn-margin" ng-click="ctl.register()">Register</button>
+        <button class="btn-margin" ng-click="ctl.register()">{{ 'register' | translate }}</button>
       </div>
     </div>
 
     <nav class="fixed-bottom jvf-menu">
       <ul>
-        <li class="menu-posts"   ><a href="#!/posts"    ng-class="ctl.current_view == 'posts'    ? 'active' : ''" id="tar_post">Post</a></li>
-        <li class="menu-showroom"><a href="#!/showroom" ng-class="ctl.current_view == 'showroom' ? 'active' : ''" id="tar_products">Show<br />Room</a></li>
-        <li class="menu-gallery" ><a href="#!/gallery"  ng-class="ctl.current_view == 'gallery'  ? 'active' : ''" id="tar_gallery">Galleria</a></li>
-        <li class="menu-video"   ><a href="#!/video"    ng-class="ctl.current_view == 'video'    ? 'active' : ''" id="tar_video">Video</a></li>
-        <li class="menu-profile" ><a href="#!/profile"  ng-class="ctl.current_view == 'profile'  ? 'active' : ''" id="tar_profile">Profilo</a></li>
-        <li class="menu-chat"    ><a href="#!/chat"     ng-class="ctl.current_view == 'chat'     ? 'active' : ''" id="tar_chat">Chat</a></li>
+        <li class="menu-posts"   >
+          <a href="#!/posts"    ng-class="ctl.current_view == 'posts'    ? 'active' : ''" id="tar_post">
+            {{'post' | translate }}
+          </a>
+        </li>
+        <li class="menu-showroom">
+          <a href="#!/showroom" ng-class="ctl.current_view == 'showroom' ? 'active' : ''" id="tar_products">
+            {{'showroom' | translate | to_trusted}}
+          </a>
+        </li>
+        <li class="menu-gallery" >
+          <a href="#!/gallery"  ng-class="ctl.current_view == 'gallery'  ? 'active' : ''" id="tar_gallery">
+            {{'gallery' | translate}}
+          </a>
+        </li>
+        <li class="menu-video"   >
+          <a href="#!/video"    ng-class="ctl.current_view == 'video'    ? 'active' : ''" id="tar_video">
+            {{'video' | translate}}
+          </a>
+        </li>
+        <li class="menu-profile" >
+          <a href="#!/profile"  ng-class="ctl.current_view == 'profile'  ? 'active' : ''" id="tar_profile">
+            {{'profile' | translate}}
+          </a>
+        </li>
+        <li class="menu-chat"    >
+          <a href="#!/chat"     ng-class="ctl.current_view == 'chat'     ? 'active' : ''" id="tar_chat">
+            {{'chat' | translate}}
+          </a>
+        </li>
       </ul>
     </nav>
   </body>
